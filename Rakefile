@@ -9,6 +9,7 @@ require "hoe"
 # Hoe.plugin :racc
 # Hoe.plugin :rcov
 # Hoe.plugin :rubyforge
+Hoe.plugin :bundler
 
 Hoe.spec "github-repo-merge" do
   # HEY! If you fill these out in ~/.hoe_template/Rakefile.erb then
@@ -21,6 +22,9 @@ Hoe.spec "github-repo-merge" do
 
   self.author = "Arthur Maltson"
   self.email = "arthur.kalm@gmail.com"
+
+  self.dependency "github_api", "~> 0.9.4"
+  self.dependency "thor", "~> 0.18.1"
   # license "MIT" # this should match the license in the README
 end
 
