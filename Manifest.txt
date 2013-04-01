@@ -1,0 +1,8 @@
+.autotest
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/github/repo/merge
+lib/github/repo/merge.rb
+test/test_github/repo/merge.rb
