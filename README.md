@@ -1,41 +1,43 @@
-= github-repo-merge
+# github-repo-merge
 
 * FIX (url)
 
-== DESCRIPTION:
+## DESCRIPTION:
 
 FIX (describe your package)
 
-== FEATURES/PROBLEMS:
+## FEATURES/PROBLEMS:
 
 * FIX (list of features or problems)
 
-== SYNOPSIS:
+## SYNOPSIS:
 
   FIX (code sample of usage)
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
-* FIX (list of requirements)
+Bundler is required.
 
-== INSTALL:
+## INSTALL:
 
-* FIX (sudo gem install, anything else)
+* gem install github-repo-merge
 
-== DEVELOPERS:
+## DEVELOPERS:
 
 After checking out the source, run:
 
-  $ rake newb
+```
+$ rake
+```
 
 This task will install any missing dependencies, run the tests/specs,
 and generate the RDoc.
 
-== LICENSE:
+## LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2013 FIX
+Copyright (c) 2013 Arthur Maltson
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
