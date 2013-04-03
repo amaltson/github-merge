@@ -1,4 +1,4 @@
-# github-repo-merge
+# github-merge
 
 * FIX (url)
 
@@ -20,7 +20,7 @@ Bundler is required.
 
 ## INSTALL:
 
-* gem install github-repo-merge
+* gem install github-merge
 
 ## DEVELOPERS:
 

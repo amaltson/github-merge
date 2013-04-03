@@ -6,7 +6,7 @@ require "hoe"
 Hoe.plugin :git
 Hoe.plugin :bundler
 
-Hoe.spec "github-repo-merge" do
+Hoe.spec "github-merge" do
   developer("Arthur Maltson", "arthur.kalm@gmail.com")
 
   self.readme_file = "README.md"

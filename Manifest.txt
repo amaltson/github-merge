@@ -3,8 +3,8 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
-bin/github-repo-merge
-lib/github_repo_merge/merge.rb
-lib/github_repo_merge/cli.rb
-lib/github_repo_merge.rb
+bin/github-merge
+lib/github_merge/merge.rb
+lib/github_merge/cli.rb
+lib/github_merge.rb
 test/test_merge.rb

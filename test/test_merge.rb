@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require "github_repo_merge/merge"
+require "github_merge/merge"
 
 class TestMerge < MiniTest::Unit::TestCase
   def test_sanity
