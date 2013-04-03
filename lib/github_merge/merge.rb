@@ -8,7 +8,7 @@ class Merge
     @options = options
   end
 
-  def merge!
+  def local!
     config = YAML.load_file @file
   end
 end
