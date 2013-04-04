@@ -18,6 +18,7 @@ class Merge
       clone_repos(config)
       move_repos_to_subdir(config)
       merged_repo = create_merged_repo(config)
+      merge_repositories(merged_repo, config)
     end
   end
 
@@ -38,6 +39,21 @@ class Merge
     merged_repo = config["merged repository"].split('/').last
       `git init #{merged_repo}`
     merged_repo
+  end
+
+  def merge_repositories(merged_repo, config)
+    Dir.chdir merged_repo do
+      config["repositories"].each_with_index do |repo, index|
+        repo_name = repo["sub directory"]
+        `git remote add #{repo_name} ../#{repo_name}`
+        `git fetch #{repo_name}`
+        if index == 0
+          `git merge #{repo_name}/master`
+        else
+          `git rebase #{repo_name}/master`
+        end
+      end
+    end
   end
 
   def git_filter_branch_move(subdir)
