@@ -2,5 +2,5 @@ merged repository: amaltson/merge-test
 repositories:
   - url: https://github.com/amaltson/github-merge.git
     sub directory: github-merge
-  - url: https://github.com/amaltson/node-blackjack
-    sub directory: node-blackjack
+  - url: https://github.com/amaltson/github-merge.git
+    sub directory: github
