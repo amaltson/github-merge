@@ -17,5 +17,12 @@ describe Merge do
       Dir.exists?("out/#{repo}").must_equal true
       Dir.exists?("out/#{repo}/#{repo}").must_equal true
     end
+
+    # check that the merge was successful
+    merged_dir = "out/merge-test"
+    Dir.exists?(merged_dir).must_equal true
+    %w{github-merge github}.each do |repo|
+      Dir.exists?("#{merged_dir}/#{repo}").must_equal true
+    end
   end
 end
