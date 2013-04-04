@@ -13,6 +13,7 @@ class Merge
     config = YAML.load_file @file
     repo_dir = clone_repos(config)
     move_repos_to_subdir(repo_dir, config)
+    merged_repo = create_merged_repo(repo_dir, config)
   end
 
   def clone_repos(config)
@@ -32,6 +33,15 @@ class Merge
         git_filter_branch_move(repo["sub directory"])
       end
     end
+  end
+
+  def create_merged_repo(repo_dir, config)
+    puts 'Creating merged repository'
+    merged_repo = config["merged repository"].split('/').last
+    Dir.chdir repo_dir do
+      `git init #{merged_repo}`
+    end
+    merged_repo
   end
 
   def git_filter_branch_move(subdir)
