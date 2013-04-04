@@ -11,36 +11,32 @@ class Merge
 
   def local!
     config = YAML.load_file @file
-    repo_dir = clone_repos(config)
-    move_repos_to_subdir(repo_dir, config)
-    merged_repo = create_merged_repo(repo_dir, config)
-  end
 
-  def clone_repos(config)
     repo_dir = "#{Dir.pwd}/out"
     FileUtils.mkdir_p repo_dir
     Dir.chdir repo_dir do
-      config["repositories"].each do |repo|
-        `git clone #{repo["url"]} #{repo["sub directory"]}`
-      end
-    end
-    repo_dir
-  end
-
-  def move_repos_to_subdir(repo_dir, config)
-    Dir.chdir repo_dir do
-      config["repositories"].each do |repo|
-        git_filter_branch_move(repo["sub directory"])
-      end
+      clone_repos(config)
+      move_repos_to_subdir(config)
+      merged_repo = create_merged_repo(config)
     end
   end
 
-  def create_merged_repo(repo_dir, config)
+  def clone_repos(config)
+    config["repositories"].each do |repo|
+      `git clone #{repo["url"]} #{repo["sub directory"]}`
+    end
+  end
+
+  def move_repos_to_subdir(config)
+    config["repositories"].each do |repo|
+      git_filter_branch_move(repo["sub directory"])
+    end
+  end
+
+  def create_merged_repo(config)
     puts 'Creating merged repository'
     merged_repo = config["merged repository"].split('/').last
-    Dir.chdir repo_dir do
       `git init #{merged_repo}`
-    end
     merged_repo
   end
 
