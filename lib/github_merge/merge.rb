@@ -1,4 +1,5 @@
 require 'yaml'
+require 'rbconfig'
 
 class Merge
   VERSION = "1.0.0"
@@ -58,12 +59,22 @@ class Merge
 
   def git_filter_branch_move(subdir)
     puts "Moving repository #{subdir} to subdirectory #{subdir}..."
+
+    sed = sed_command_to_use
     Dir.chdir subdir do
       %x[git filter-branch --index-filter \
-        'git ls-files -s | gsed "s@\t@&#{subdir}/@" |
+        'git ls-files -s | #{sed} "s@\t@&#{subdir}/@" |
                 GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
                         git update-index --index-info &&
          mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"']
+    end
+  end
+
+  def sed_command_to_use
+    if RbConfig::CONFIG['host_os'] =~ /darwin/
+      'gsed'
+    else
+      'sed'
     end
   end
 end
