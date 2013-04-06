@@ -5,8 +5,10 @@ require 'fileutils'
 
 describe Merge do
   before do
-    FileUtils.rm_r('out')
-    @merge = Merge.new 'test/sample-merge-config.yml', nil
+    FileUtils.rm_rf('out')
+    options = MiniTest::Mock.new
+    options.expect(:all_svn?, false)
+    @merge = Merge.new 'test/sample-merge-config.yml', options
   end
 
   it "should merge locally" do

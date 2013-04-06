@@ -1,5 +1,6 @@
 require 'yaml'
 require 'rbconfig'
+require 'fileutils'
 
 class Merge
   VERSION = "1.0.0"
@@ -48,11 +49,7 @@ class Merge
         repo_name = repo["sub directory"]
         `git remote add #{repo_name} ../#{repo_name}`
         `git fetch #{repo_name}`
-        if index == 0
-          `git merge #{repo_name}/master`
-        else
-          `git rebase #{repo_name}/master`
-        end
+        `git merge --no-edit #{repo_name}/master`
       end
     end
   end
@@ -66,7 +63,15 @@ class Merge
         'git ls-files -s | #{sed} "s@\t@&#{subdir}/@" |
                 GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
                         git update-index --index-info &&
-         mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"']
+         mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' #{beginning_sha}..HEAD]
+    end
+  end
+
+  def beginning_sha
+    if @options.all_svn?
+      `git log --pretty=format:%H --reverse`.split("\n")[1]
+    else
+      `git log --pretty=format:%H --reverse`.split("\n").first
     end
   end
 
