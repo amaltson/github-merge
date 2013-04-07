@@ -24,6 +24,10 @@ class Merge
     end
   end
 
+  def push!
+
+  end
+
   def clone_repos(config)
     config["repositories"].each do |repo|
       `git clone #{repo["url"]} #{repo["sub directory"]}`

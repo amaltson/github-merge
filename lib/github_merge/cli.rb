@@ -8,4 +8,10 @@ class MergeCli < Thor
   def local(file)
     Merge.new(file, options).local!
   end
+
+  desc 'push file.yml', %q{Pushes merged GitHub repositories to new GitHub repo.
+                           Will do local merge if one wasn't done already.}
+  def push(file)
+    Merge.new(file, options).push!
+  end
 end
