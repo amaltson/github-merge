@@ -12,12 +12,12 @@ class Merge
     @file = file
     @options = options
     @config = YAML.load_file @file
-    @local_merge = LocalMerge.new options
+    @local_merge = LocalMerge.new(@config, @options)
     @push_merge = PushMerge.new
   end
 
   def local!
-    @local_merge.merge! @config
+    @local_merge.merge!
   end
 
   def push!

@@ -1,42 +1,43 @@
 class LocalMerge
 
-  def initialize(options)
+  def initialize(config, options)
+    @config = config
     @options = options
   end
 
-  def merge!(config)
+  def merge!
     repo_dir = "#{Dir.pwd}/out"
     FileUtils.mkdir_p repo_dir
     Dir.chdir repo_dir do
-      clone_repos(config)
-      move_repos_to_subdir(config)
-      merged_repo = create_merged_repo(config)
-      merge_repositories(merged_repo, config)
+      clone_repos
+      move_repos_to_subdir
+      merged_repo = create_merged_repo
+      merge_repositories(merged_repo)
     end
   end
 
-  def clone_repos(config)
-    config["repositories"].each do |repo|
+  def clone_repos
+    @config["repositories"].each do |repo|
       `git clone #{repo["url"]} #{repo["sub directory"]}`
     end
   end
 
-  def move_repos_to_subdir(config)
-    config["repositories"].each do |repo|
+  def move_repos_to_subdir
+    @config["repositories"].each do |repo|
       git_filter_branch_move(repo["sub directory"])
     end
   end
 
-  def create_merged_repo(config)
+  def create_merged_repo
     puts 'Creating merged repository'
-    merged_repo = config["merged repository"].split('/').last
+    merged_repo = @config["merged repository"].split('/').last
       `git init #{merged_repo}`
     merged_repo
   end
 
-  def merge_repositories(merged_repo, config)
+  def merge_repositories(merged_repo)
     Dir.chdir merged_repo do
-      config["repositories"].each_with_index do |repo, index|
+      @config["repositories"].each_with_index do |repo, index|
         repo_name = repo["sub directory"]
         `git remote add #{repo_name} ../#{repo_name}`
         `git fetch #{repo_name}`
