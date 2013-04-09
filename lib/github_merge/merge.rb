@@ -21,6 +21,7 @@ class Merge
   end
 
   def push!
+    @local_merge.merge! unless @local_merge.merged?
     @push_merge.push!
   end
 end
