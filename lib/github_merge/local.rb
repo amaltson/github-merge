@@ -11,7 +11,7 @@ class LocalMerge
     Dir.chdir repo_dir do
       clone_repos
       move_repos_to_subdir
-      create_merged_repo
+      create_empty_merged_repo
       merge_repositories
     end
   end
@@ -28,13 +28,9 @@ class LocalMerge
     end
   end
 
-  def create_merged_repo
+  def create_empty_merged_repo
     puts 'Creating merged repository'
     `git init #{merge_repo_name}`
-  end
-
-  def merge_repo_name
-    @config["merged repository"].split('/').last
   end
 
   def merge_repositories
@@ -75,6 +71,10 @@ class LocalMerge
     else
       'sed'
     end
+  end
+
+  def merge_repo_name
+    @config["merged repository"]
   end
 
   def merged?
