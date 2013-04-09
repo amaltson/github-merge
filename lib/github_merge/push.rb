@@ -1,10 +1,15 @@
 class PushMerge
 
-  def push!(config)
-    github = initialize_github(config)
+  def initialize(config, options)
+    @config = config
+    @options = options
   end
 
-  def initialize_github(config)
+  def push!
+    github = initialize_github
+  end
+
+  def initialize_github
     api_endpoint = config["host"] || "https://api.github.com"
     oauth_token = config["oauth"]
 

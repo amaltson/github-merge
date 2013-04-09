@@ -13,7 +13,7 @@ class Merge
     @options = options
     @config = YAML.load_file @file
     @local_merge = LocalMerge.new(@config, @options)
-    @push_merge = PushMerge.new
+    @push_merge = PushMerge.new(@config, @options)
   end
 
   def local!
@@ -21,6 +21,6 @@ class Merge
   end
 
   def push!
-    @push_merge.push! @config
+    @push_merge.push!
   end
 end
