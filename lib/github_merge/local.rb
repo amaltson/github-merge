@@ -11,8 +11,8 @@ class LocalMerge
     Dir.chdir repo_dir do
       clone_repos
       move_repos_to_subdir
-      merged_repo = create_merged_repo
-      merge_repositories(merged_repo)
+      create_merged_repo
+      merge_repositories
     end
   end
 
@@ -30,13 +30,15 @@ class LocalMerge
 
   def create_merged_repo
     puts 'Creating merged repository'
-    merged_repo = @config["merged repository"].split('/').last
-      `git init #{merged_repo}`
-    merged_repo
+    `git init #{merge_repo_name}`
   end
 
-  def merge_repositories(merged_repo)
-    Dir.chdir merged_repo do
+  def merge_repo_name
+    @config["merged repository"].split('/').last
+  end
+
+  def merge_repositories
+    Dir.chdir merge_repo_name do
       @config["repositories"].each_with_index do |repo, index|
         repo_name = repo["sub directory"]
         `git remote add #{repo_name} ../#{repo_name}`
@@ -75,4 +77,12 @@ class LocalMerge
     end
   end
 
+  def merged?
+    merge_repo_dir = "out/#{merge_repo_name}"
+    return false unless Dir.exist? merge_repo_dir
+    Dir.chdir merge_repo_dir do
+      return false unless Dir.exists? '.git'
+      return `git log`.split("\n").size > 0
+    end
+  end
 end

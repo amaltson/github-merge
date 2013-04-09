@@ -11,6 +11,10 @@ describe Merge do
     @merge = Merge.new 'test/sample-merge-config.yml', options
   end
 
+  it "shouldn't be merged by default" do
+    @merge.instance_variable_get("@local_merge").merged?.must_equal false
+  end
+
   it "should merge locally" do
     @merge.local!
 
@@ -26,5 +30,7 @@ describe Merge do
     %w{github-merge github}.each do |repo|
       Dir.exists?("#{merged_dir}/#{repo}").must_equal true
     end
+
+    @merge.instance_variable_get("@local_merge").merged?.must_equal true
   end
 end
