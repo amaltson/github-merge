@@ -1,6 +1,7 @@
 host: https://api.github.com
-oauth: oath_token_here
-merged repository: amaltson/merge-test
+oauth: oauth_token_here
+merged organization: org
+merged repository: merge-test
 repositories:
   - url: https://github.com/amaltson/github-merge.git
     sub directory: github-merge
