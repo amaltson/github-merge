@@ -1,14 +1,15 @@
 class LocalMerge
 
+  OUT_DIR = "#{Dir.pwd}/out"
+
   def initialize(config, options)
     @config = config
     @options = options
   end
 
   def merge!
-    repo_dir = "#{Dir.pwd}/out"
-    FileUtils.mkdir_p repo_dir
-    Dir.chdir repo_dir do
+    FileUtils.mkdir_p OUT_DIR
+    Dir.chdir OUT_DIR do
       clone_repos
       move_repos_to_subdir
       create_empty_merged_repo
@@ -78,7 +79,7 @@ class LocalMerge
   end
 
   def merged?
-    merge_repo_dir = "out/#{merge_repo_name}"
+    merge_repo_dir = "#{OUT_DIR}/#{merge_repo_name}"
     return false unless Dir.exist? merge_repo_dir
     Dir.chdir merge_repo_dir do
       return false unless Dir.exists? '.git'

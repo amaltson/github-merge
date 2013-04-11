@@ -10,7 +10,7 @@ describe Merge do
   end
 
   after :each do
-    FileUtils.rm_rf('out')
+    FileUtils.rm_rf(LocalMerge::OUT_DIR)
   end
 
   it "shouldn't be merged by default" do
@@ -22,12 +22,12 @@ describe Merge do
 
     # Check clone and rename worked
     %w{github-merge github}.each do |repo|
-      Dir.exists?("out/#{repo}").should be_true
-      Dir.exists?("out/#{repo}/#{repo}").should be_true
+      Dir.exists?("#{LocalMerge::OUT_DIR}/#{repo}").should be_true
+      Dir.exists?("#{LocalMerge::OUT_DIR}/#{repo}/#{repo}").should be_true
     end
 
     # check that the merge was successful
-    merged_dir = "out/merge-test"
+    merged_dir = "#{LocalMerge::OUT_DIR}/merge-test"
     Dir.exists?(merged_dir).should be_true
     %w{github-merge github}.each do |repo|
       Dir.exists?("#{merged_dir}/#{repo}").should be_true
