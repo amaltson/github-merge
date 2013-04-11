@@ -1,6 +1,6 @@
 class LocalMerge
 
-  OUT_DIR = "#{Dir.pwd}/out"
+  OUT_DIR = "#{Dir.pwd}/merged"
 
   def initialize(config, options)
     @config = config
