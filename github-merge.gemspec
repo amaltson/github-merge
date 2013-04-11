@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Merge::VERSION
   spec.authors       = ["Arthur Maltson"]
   spec.email         = ["arthur.kalm@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Script that merges multiple GitHub repositories into a new, single repository.}
+  spec.summary       = %q{Split your project into lots of small Git repos and finding yourself creating cross repo Pull Requests? This is the gem for you.}
+  spec.homepage      = "https://github.com/amaltson/github-merge"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

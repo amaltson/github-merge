@@ -5,7 +5,7 @@ require_relative 'local'
 require_relative 'push'
 
 class Merge
-  VERSION = "1.0.0"
+  VERSION = "0.0.1"
   MOVE_TREE_SCRIPT_PATH = "#{Dir.pwd}/lib/github_merge"
 
   def initialize(file, options)

@@ -1,24 +1,30 @@
-# Github::Merge
+# github-merge
 
-TODO: Write a gem description
+Script that merges multiple GitHub repositories into a new, single repository.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+This is a CLI app, so you'll have to:
 
-    gem 'github-merge'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install github-merge
+```
+$ gem install github-merge
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+`github-merge` uses a YAML based configuration that lists the
+repositories to merge and the name (and optionally organization) of the
+new combined repository. A sample configuration file:
+
+```yaml
+merged organization: acme
+merged repository: sinatra-templates
+repositories:
+  - url: https://github.com/rkh/sinatra-template.git
+    sub directory: sinatra-base-template
+  - url: https://github.com/sinatra/heroku-sinatra-app.git 
+    sub directory: sinatra-heroku-template
+```
 
 ## Contributing
 
