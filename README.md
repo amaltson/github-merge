@@ -26,6 +26,45 @@ repositories:
     sub directory: sinatra-heroku-template
 ```
 
+You'd then merge the repositories:
+
+```
+$ github-merge local sinatra-templates.yml
+```
+
+### Options
+
+*[--all-svn]*
+
+Pass this argument if the repositories being merged started their life
+in Subversion and were subsequently migrated to Git. This is required
+because the merge has to skip the initial commit because of a weird
+git-svn issue that causes the `git filter-branch` to bomb (don't ask
+me, it was on Stackoverflow and it works).
+
+### Technical Details
+
+The merge process is done in the following steps
+
+1. Clone repositories.
+2. For each repository to be merged, execute a `git filter-branch` to
+   move the entire repository contents into the specified subdirectory.
+3. Create a new empty Git repository.
+4. Add each repository to be merged as a remote repository.
+5. Fetch and `git merge --no-edit <remote>/master` for each repository.
+
+Note: a `git merge` is used to preserve the branching history of each
+repository being merged.
+
+### Limitations
+
+The following are limitations of github-merge that may, or may not, be
+addressed in the future.
+
+* Does not carry over tags
+* Does not carry over active (unmerged) branches
+* Does not merge repositories with only 1 commit
+
 ## Contributing
 
 1. Fork it
