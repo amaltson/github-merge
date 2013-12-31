@@ -7,7 +7,7 @@ class LocalMerge
     @options = options
   end
 
-  def merge!
+  def merge_new!
     FileUtils.mkdir_p OUT_DIR
     Dir.chdir OUT_DIR do
       clone_repos

@@ -6,6 +6,7 @@ describe Merge do
   before :each do
     options = double()
     options.stub(:all_svn? => false)
+    options.stub(:new_repo? => true)
     @merge = Merge.new 'spec/sample-merge-config.yml', options
   end
 
@@ -17,7 +18,7 @@ describe Merge do
     @merge.instance_variable_get("@local_merge").merged?.should be_false
   end
 
-  it "should merge locally" do
+  it "should merge locally into new repository" do
     @merge.local!
 
     # Check clone and rename worked
@@ -34,8 +35,5 @@ describe Merge do
     end
 
     @merge.instance_variable_get("@local_merge").merged?.should be_true
-  end
-
-  it "should merge local when pushing" do
   end
 end

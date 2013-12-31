@@ -17,7 +17,9 @@ class Merge
   end
 
   def local!
-    @local_merge.merge!
+    if @options.new_repo?
+      @local_merge.merge_new!
+    end
   end
 
   def push!
