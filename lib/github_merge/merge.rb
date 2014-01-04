@@ -19,6 +19,8 @@ class Merge
   def local!
     if @options.new_repo?
       @local_merge.merge_new!
+    elsif not @options.new_repo?
+      @local_merge.merge!
     end
   end
 

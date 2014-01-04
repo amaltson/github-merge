@@ -4,10 +4,9 @@ require 'fileutils'
 
 describe Merge do
   before :each do
-    options = double()
-    options.stub(:all_svn? => false)
-    options.stub(:new_repo? => true)
-    @merge = Merge.new 'spec/sample-merge-config.yml', options
+    @options = double()
+    @options.stub(:all_svn? => false)
+    @merge = Merge.new 'spec/sample-merge-config.yml', @options
   end
 
   after :each do
@@ -19,6 +18,7 @@ describe Merge do
   end
 
   it "should merge locally into new repository" do
+    @options.stub(:new_repo? => true)
     @merge.local!
 
     # Check clone and rename worked
@@ -33,6 +33,18 @@ describe Merge do
     %w{github-merge github}.each do |repo|
       Dir.exists?("#{merged_dir}/#{repo}").should be_true
     end
+
+    @merge.instance_variable_get("@local_merge").merged?.should be_true
+  end
+
+  it "should merge locally into existing repository" do
+    @options.stub(:new_repo? => false)
+    @merge.local!
+
+    # check that the merge was successful
+    merged_dir = "#{LocalMerge::OUT_DIR}/github-merge"
+    Dir.exists?(merged_dir).should be_true
+    Dir.exists?("#{merged_dir}/github").should be_true
 
     @merge.instance_variable_get("@local_merge").merged?.should be_true
   end

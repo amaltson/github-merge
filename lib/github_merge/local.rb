@@ -10,6 +10,17 @@ class LocalMerge
     @options = options
   end
 
+  def merge!
+    FileUtils.mkdir_p OUT_DIR
+    @merge_repo_name = repositories.first['sub directory']
+    Dir.chdir OUT_DIR do
+      clone_repos(repositories)
+      sub_repos = repositories[1..-1]
+      move_repos_to_subdir(sub_repos)
+      merge_repositories(sub_repos)
+    end
+  end
+
   def merge_new!
     FileUtils.mkdir_p OUT_DIR
     Dir.chdir OUT_DIR do
