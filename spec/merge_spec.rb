@@ -70,6 +70,14 @@ describe Merge do
     Dir.exists?(merged_dir).should be_true
     Dir.exists?("#{merged_dir}/github").should be_true
 
+    # Ensure there are 6 commits (5 + merge commit)
+    Dir.chdir(merged_dir) do
+      git_log = IO.popen("git log --oneline").each_with_object([]) do |line, log|
+        log << line.chomp
+      end
+      git_log.size.should eq(6)
+    end
+
     @merge.instance_variable_get("@local_merge").merged?.should be_true
   end
 end
