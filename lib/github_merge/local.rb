@@ -2,8 +2,11 @@ class LocalMerge
 
   OUT_DIR = "#{Dir.pwd}/merged"
 
-  def initialize(config, options)
-    @config = config
+  attr_accessor :merge_repo_name, :repositories
+
+  def initialize(merge_repo_name, repositories, options)
+    @merge_repo_name = merge_repo_name
+    @repositories = repositories
     @options = options
   end
 
@@ -18,13 +21,13 @@ class LocalMerge
   end
 
   def clone_repos
-    @config["repositories"].each do |repo|
+    repositories.each do |repo|
       `git clone #{repo["url"]} #{repo["sub directory"]}`
     end
   end
 
   def move_repos_to_subdir
-    @config["repositories"].each do |repo|
+    repositories.each do |repo|
       git_filter_branch_move(repo["sub directory"])
     end
   end
@@ -36,7 +39,7 @@ class LocalMerge
 
   def merge_repositories
     Dir.chdir merge_repo_name do
-      @config["repositories"].each_with_index do |repo, index|
+      repositories.each_with_index do |repo, index|
         repo_name = repo["sub directory"]
         `git remote add #{repo_name} ../#{repo_name}`
         `git fetch #{repo_name}`
@@ -72,10 +75,6 @@ class LocalMerge
     else
       'sed'
     end
-  end
-
-  def merge_repo_name
-    @config["merged repository"]
   end
 
   def merged?

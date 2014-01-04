@@ -12,7 +12,7 @@ class Merge
     @file = file
     @options = options
     @config = YAML.load_file @file
-    @local_merge = LocalMerge.new(@config, @options)
+    @local_merge = LocalMerge.new(@config["merged repository"], @config["repositories"], @options)
     @push_merge = PushMerge.new(@config, @options)
   end
 
