@@ -3,7 +3,7 @@ oauth: oauth_token_here
 merged organization: org
 merged repository: merge-test
 repositories:
-  - url: https://github.com/amaltson/github-merge.git
+  - url: file:///tmp/repo1
     sub directory: github-merge
-  - url: https://github.com/amaltson/github-merge.git
+  - url: file:///tmp/repo2
     sub directory: github

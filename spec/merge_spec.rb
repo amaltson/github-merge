@@ -3,6 +3,30 @@ require 'github_merge/merge'
 require 'fileutils'
 
 describe Merge do
+  before :all do
+    FileUtils.mkdir_p('/tmp/repo1')
+    FileUtils.mkdir_p('/tmp/repo2')
+    Dir.chdir('/tmp/repo1') do
+      `git init`
+      `touch repo1 && git add repo1`
+      `git commit -m "repo1 commit 1"`
+      `git commit -m "repo1 commit 2" --allow-empty`
+      `git commit -m "repo1 commit 3" --allow-empty`
+    end
+
+    Dir.chdir('/tmp/repo2') do
+      `git init`
+      `touch repo2 && git add repo2`
+      `git commit -m "repo2 commit 1"`
+      `git commit -m "repo2 commit 2" --allow-empty`
+    end
+  end
+
+  after :all do
+    FileUtils.rm_rf('/tmp/repo1')
+    FileUtils.rm_rf('/tmp/repo2')
+  end
+
   before :each do
     @options = double()
     @options.stub(:all_svn? => false)
