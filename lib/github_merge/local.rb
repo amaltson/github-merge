@@ -13,21 +13,21 @@ class LocalMerge
   def merge_new!
     FileUtils.mkdir_p OUT_DIR
     Dir.chdir OUT_DIR do
-      clone_repos
-      move_repos_to_subdir
+      clone_repos(repositories)
+      move_repos_to_subdir(repositories)
       create_empty_merged_repo
-      merge_repositories
+      merge_repositories(repositories)
     end
   end
 
-  def clone_repos
-    repositories.each do |repo|
+  def clone_repos(repos)
+    repos.each do |repo|
       `git clone #{repo["url"]} #{repo["sub directory"]}`
     end
   end
 
-  def move_repos_to_subdir
-    repositories.each do |repo|
+  def move_repos_to_subdir(repos)
+    repos.each do |repo|
       git_filter_branch_move(repo["sub directory"])
     end
   end
@@ -37,9 +37,9 @@ class LocalMerge
     `git init #{merge_repo_name}`
   end
 
-  def merge_repositories
+  def merge_repositories(repos)
     Dir.chdir merge_repo_name do
-      repositories.each_with_index do |repo, index|
+      repos.each_with_index do |repo, index|
         repo_name = repo["sub directory"]
         `git remote add #{repo_name} ../#{repo_name}`
         `git fetch #{repo_name}`
